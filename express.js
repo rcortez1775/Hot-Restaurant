@@ -10,12 +10,14 @@ app.use(bodyParser.json());
 
 //--------------------------------------------------
 
-var currentTables = [{
+var currentTables = [
+{
 name: "Robert",
 number: 9099392313,
 email: "noo@noo.com",
 id: 313
-}]
+}
+]
 
 var waitList = [
 
@@ -35,13 +37,13 @@ app.get("/tables", function (req, res) {
     res.sendFile(path.join(__dirname, "Tables.html"));
 });
 
-app.get("/api/tables", function(req, res) {
+app.get("/api/tables", function (req, res) {
     return res.json(currentTables);
-  });
+});
 
-  app.get("/api/waitList", function(req, res) {
+app.get("/api/waitList", function (req, res) {
     return res.json(waitList);
-  });
+});
 
 //--------------------------------------------------
 
