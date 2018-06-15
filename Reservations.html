@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reservations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div align="center" class="jumbotron">
+        <h1 class="display-4">Hot Restaurant</h1>
+        <p class="lead">We only have 5 tables! Book your seat before they are all gone!</p>
+        <a id="viewTables" class="btn btn-primary btn-lg" href="/tables" role="button">View Tables</a>
+        <a id="home" class="btn btn-primary btn-lg" href="/" role="button">Home</a>
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="input" class="form-control" id="name" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <label for="number">Phone Number</label>
+            <input type="input" class="form-control" id="number" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="uniqueid">Unique ID</label>
+            <input type="input" class="form-control" id="id">
+        </div>
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+    <a href="">API Table Link</a>
+    <a href="">API Wait List </a>
+    <a href="">Github Repo</a>
+
+    <script type="text/javascript">
+
+        $("#viewTables").on("click", function () {
+            $.get("/tables");
+        });
+
+        $("#home").on("click", function () {
+            $.get("/");
+        });
+
+
+        $("#submit").on("click", function (event) {
+            event.preventDefault();
+
+            var newCustomer = {
+                name: $("#name").val().trim(),
+                number: $("#number").val().trim(),
+                email: $("#email").val().trim(),
+                id: $("#id").val().trim()
+            };
+
+
+            $.post("/api/tables", newCustomer)
+                .then(function (data) {
+                    console.log(data);
+                    alert("Creating Reservation...");
+                });
+
+        });
+
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
