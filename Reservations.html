@@ -44,9 +44,9 @@
     </form>
 
 
-    <a href="">API Table Link</a>
-    <a href="">API Wait List </a>
-    <a href="">Github Repo</a>
+    <a href="/api/tables">API Table Link</a>
+    <a href="/api/waitList">API Wait List </a>
+    <a href="https://github.com/rcortez1775/Hot-Restaurant">Github Repo</a>
 
     <script type="text/javascript">
         //View tables and Home Buttons
@@ -73,11 +73,15 @@
             $.post("/api/tables", newCustomer)
                 .then(function (data) {
                     console.log(data);
-                    alert("Creating Reservation...");
+                    $.get("/api/tables").then(function (data) {
+                        if (data.length <= 5) {
+                            alert("Your reservation is confirmed");
+                        } else {
+                            alert("You've been added to the waitlist")
+                        }
+                    })
                 });
-
         });
-
 
     </script>
 </body>

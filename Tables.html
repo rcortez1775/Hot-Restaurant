@@ -22,42 +22,85 @@
         <a id="home" class="btn btn-primary btn-lg" href="/" role="button">Home</a>
     </div>
 
-    <table class="myTable">
-        <thead>
-            <tr>
-                <th>Current Reservations</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>Reserved Tables</strong>
+                    </h3>
+                </div>
+                <ol class="panel-body" id="well-section">
 
-    <table class="myTable">
-        <thead>
-            <tr>
-                <th>Waiting List</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>Wait List</strong>
+                    </h3>
+                </div>
+                <ol class="panel-body" id="wait-section">
+                </ol>
+            </div>
+        </div>
+    </div>
 
 
-    <a href="">Clear Table</a>
-    <a href="">API Table Link</a>
-    <a href="">API Wait List </a>
-    <a href="">Github Repo</a>
+    <a id="clear" href="/">Clear Table</a>
+    <a href="api/tables">API Table Link</a>
+    <a href="api/waitList">API Wait List </a>
+    <a href="https://github.com/rcortez1775/Hot-Restaurant">Github Repo</a>
 
     <script type="text/javascript">
-
+        //Reservation Page Button
         $("#makeReservation").on("click", function () {
             $.get("/add");
         });
-
+        //Home Button
         $("#home").on("click", function () {
             $.get("/");
         });
+        // Appends to Reserved Tables
+        $.get("/api/tables", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var wellSection = $("<div>");
+                wellSection.addClass("well");
+                wellSection.attr("id", "character-well-" + i);
+                $("#well-section").append(wellSection);
+                $("#character-well-" + i).append("<li>" + data[i].id + "</li>");
+            }
+        });
+        //Appends to Wait List
+        $.get("/api/waitList", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var waitSection = $("<div>");
+                waitSection.addClass("wait");
+                waitSection.attr("id", "character-wait-" + i);
+                $("#wait-section").append(waitSection);
+                $("#character-wait-" + i).append("<li>ID: " + data[i].id + "</li>");
+            }
+        });
 
+        /* $("#clear").on("click", function () {
+            $.get("/api/tables").then(function (data1) {
+                data1.length = 0;
+                $.post("/api/tables", data1).then(function(newData1){
+                    console.log(newData1);
+                })
+            });
+            $.get("/api/waitList").then(function (data2) {
+                data2.length = 0;
+                $.post("/api/waitList", data2).then(function(newData2){
+                    console.log(newData2);
+            });
+        }); */
+   
     </script>
 </body>
 
